@@ -60,6 +60,7 @@ wielu zmiennych:
 function algorytm_tur(pk, pm, M, MAX_Pokolen, opcja, granica, x0, y0, teta_t0, teta_c0, u0, PSC)
 function algorytm_rank(pk, pm, M, MAX_Pokolen, opcja, granica, x0, y0, teta_t0, teta_c0, u0, PSC)
 function podglad(PSC, granica, x0, y0, teta_t0, teta_c0)
+ ``` 
 gdzie:
 pk – prawdopodobieństwo krzyżowania
 pm – prawdopodobieństwo mutacji
@@ -112,7 +113,7 @@ dnos -% odległość od tylnej osi naczepy do siodła
 dcos - % odległość od przedniej osi ciągnika do siodła
 ktora_proba – nr próby podczas której znaleziono rozwiązanie
 czas – czas znalezienia rozwiązania przez algorytm 
- ```  
+
 # Wyniki
 
 Najgorsze rezultaty otrzymano dla przyjętej początkowo metody koła ruletki. Próby poprawy tej
