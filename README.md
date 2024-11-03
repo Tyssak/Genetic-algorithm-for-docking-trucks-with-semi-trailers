@@ -1,7 +1,6 @@
 ---
 # ENG
 ---
-<div align="center">    
  
 #  Genetic support system for docking trucks with semi-trailers
 
