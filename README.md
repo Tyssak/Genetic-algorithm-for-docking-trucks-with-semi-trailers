@@ -7,7 +7,7 @@
 <div align="left">    
 
 ## Opis
-Projekt ten ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami, wykorzystując klasyczny algorytm genetyczny. Program można uruchomić za pomocą skryptu `uruchom.m` lub interfejsu graficznego `GUI.mlapp`. 
+Projekt ten ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami, wykorzystując klasyczny algorytm genetyczny. Problem ten polegał na znalezieniu jakiejkolwiek drogi przejazdu do miejsca docelowego unikając przy tym kolizji. W celu jego rozwiązania przyjęto strategię zgodnie z którą algorytm sterował kątem skrętu kół ciągnika oraz jego prędkością. Program można uruchomić za pomocą skryptu `uruchom.m` lub interfejsu graficznego `GUI.mlapp`. 
 
 ---
 
