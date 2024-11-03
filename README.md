@@ -39,8 +39,9 @@ How to Run
 #  System genetycznego wspomagania dokowania ciężarówek znaczepami
  
 # Opis   
-Program ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami za pomocą klasycznego algorytmu genetycznego. Program należy uruchomiać za pomocą skryptu uruchom.m lub GUI.mlapp Na program składa się łącznie 9 plików:
- ```   
+Program ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami za pomocą klasycznego algorytmu genetycznego. Program należy uruchomiać za pomocą skryptu `uruchom.m` lub `GUI.mlapp`. Na program składa się łącznie 9 plików:
+
+```plaintext
 - uruchom.m – skrypt uruchomieniowy - za jego pomocą lub aplikacji GUI należy włączać algorytm
 - GUI.mlapp – aplikacja GUI umożliwiająca uruchomienie algorytmu
 - Instrukcja.mlapp – okno do otwarcia z aplikacji głównej zawierające skróconą instrukcję użytkownika
@@ -49,18 +50,18 @@ Program ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami za 
 - wyswietl.m – skrypt odpowiedzialny za animację parkowania ciężarówki i wyświetlenie wykresów
 - linexline.m – zewnętrzna funkcja sprawdzająca, czy dwa odcinki się ze sobą przecinają (zaimplementowana w algorytmie do wykrywania kolizji) [Preetham Manjunatha: Line 2 Line intersection point (two line segments), 2022, https://github.com/preethamam/Line2LineIntersectionPoint/releases/tag/1.1.0, GitHub.]
 - podglad.m – skrypt wyświetlający przygotowany scenariusz bez uruchamiania algorytmu
-- scenariusze_bonus.m – przygotowana dodatkowe scenariusze do wklejenia do skryptu uruchom.m
- ```   
+- scenariusze_bonus.m – przygotowane dodatkowe scenariusze do wklejenia do skryptu uruchom.m
+```
 Uproszczoną strukturę w programu można opisać w następujący sposób:
 ![image](https://github.com/user-attachments/assets/05820a48-5f1f-4e2f-bd02-1056cce963d4)
 
 Uwaga: część skryptów występuje jako funkcje, które do wywołania często wymagają podania
 wielu zmiennych:
- ```  
+```plaintext 
 function algorytm_tur(pk, pm, M, MAX_Pokolen, opcja, granica, x0, y0, teta_t0, teta_c0, u0, PSC)
 function algorytm_rank(pk, pm, M, MAX_Pokolen, opcja, granica, x0, y0, teta_t0, teta_c0, u0, PSC)
 function podglad(PSC, granica, x0, y0, teta_t0, teta_c0)
- ``` 
+
 gdzie:
 pk – prawdopodobieństwo krzyżowania
 pm – prawdopodobieństwo mutacji
@@ -113,7 +114,7 @@ dnos -% odległość od tylnej osi naczepy do siodła
 dcos - % odległość od przedniej osi ciągnika do siodła
 ktora_proba – nr próby podczas której znaleziono rozwiązanie
 czas – czas znalezienia rozwiązania przez algorytm 
-
+ ``` 
 # Wyniki
 
 Najgorsze rezultaty otrzymano dla przyjętej początkowo metody koła ruletki. Próby poprawy tej
