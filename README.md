@@ -3,103 +3,32 @@
 ---
 <div align="center">    
  
-#  Analysis of video processing algorithms with face recordings to improve emotion recognition
+#  Genetic support system for docking trucks with semi-trailers
 
 </div>
  
 # Description   
-The goal of this work was to examine the impact of various image preprocessing methods on the effectiveness of emotion recognition by neural networks based on photos and video recordings. The methods examined include spatial normalization combined with techniques such as intensity normalization using CLAHE, edge detection with Sobel and Canny filters, and frame addition and subtraction. The study employed the AlexNet classifiers and a dedicated CNN2D network. Among all tested methods, the most effective was the frame addition method, which involves assigning 3 consecutive frames at short time intervals to the R, G, and B channels. This method also uses spatial normalization to position and scale the face based on the location of facial landmarks. The overall solution model is as follows:
+
 #
 
-![SolutionModel](https://github.com/user-attachments/assets/b797227f-ab93-4f9b-a134-84d727d9fc17)
+
 
 
 # Results
-Using the frame addition method and the AlexNet classifier, an accuracy of 70.09% was achieved for the RAVDESS dataset. Other results are presented in the tables below.
-
-Results for image datasets (CNN2D classifier):
-
-| **Dataset** | **Base Accuracy** | **Normalization without Mask** | **Normalization with Mask** | **Normalization + SOBEL** | **Normalization + CANNY** | **Normalization + CLAHE** |
-|-----------------|-----------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **CK+**         | 0,8283                | 0,8788                     | 0,8485                   | **0,9040**                | 0,8030                   | 0,8788                   |
-| **FER2013**     | 0,6967                | **0,6987**                 | 0,6928                   | 0,6562                   | 0,6240                   | 0,6920                   |
-| **RAFDB**       | 0,8338                | 0,8342                     | **0,8344**               | 0,7120                   | 0,6932                   | 0,8322                   |
-
-Wyniki dla materiałów wideo (baza RAVDESS - 7 emocji: spokój, radość, smutek, złość, strach, zniesmaczenie, zaskoczenie):
-
-| **Classifier** | **Base Accuracy** | **Normalization without Mask** | **Normalization with Mask** | **Normalization + SOBEL** | **Normalization + CANNY** | **Normalization + CLAHE** |
-|------------------|-----------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **CNN2D**        | 0,6006                | 0,6147                     | 0,6086                   | 0,6256                   | 0,6343                   | **0,6352**               |
-| **AlexNet**      | 0,6845                | 0,6842                     | 0,6537                   | 0,5138                   | 0,4502                   | **0,6928**               |
-
-| **Classifier** | **Base Accuracy** | **Frame Subtraction with Mask** | **Frame Subtraction (no Mask)** | **Frame Addition with Mask** | **Frame Addition (no Mask)** |
-|------------------|-----------------------|--------------------------------|------------------------------------|------------------------------|----------------------------------|
-| **CNN2D**        | 0,6006                | 0,4567                         | 0,4922                             | **0,6492**                    | 0,6274                           |
-| **AlexNet**      | 0,6552                | 0,5931                         | 0,6200                             | **0,7009**                    | 0,6804                           |
 
 # Demo
 
-https://github.com/user-attachments/assets/36b7143b-1af6-4ac0-87e8-28c4e0d6439e
 
 How to Run
-First, install the required dependencies:
-```bash
-# Clone the repository  
-git clone https://github.com/Tyssak/pracamagisterska.git
-
-# Install the project   
-cd pracamagisterska
-pip install -e .   
-pip install -r requirements.txt
-
-# Download the model_eq.h5 file and place it in the project directory or train your own model (see the "Training Your Own Model" section)
-# Run the module (by default, it uses the model_eq.h5 file as the model)
-python main.py
 
  ```   
 # List of All Scripts:
-- clasyficate.py: Contains the Clasyficator class, which classifies emotions based on the provided frame. It is called by the PreProcessor class from the pre_processor_classify script.
-- filters.py: Contains the FiltersOption class, implementing various filters used in the algorithm.
-- main.py: Script responsible for the GUI and calling the PreProcessor class from the pre_processor_classify script.
-- model_training.ipynb: Script for training the model. By default, it uses a dataset located in the /kaggle/input/laczone/wszystkie folder, which has been previously divided into two subfolders: one in the train folder and the other in the test folder. The default number of classes in the dataset is 7, and the image size is (227, 227) with three channels. The default classifier is AlexNet. After uncommenting the marked section of the code, the CNN2D classifier can be used.
-- pre_processor_classify.py: Contains the PreProcessor class, implementing the main preprocessing logic and several other useful functions during preprocessing.
-- pre_processor_prepare_dataset.py: A slightly modified version of the PreProcessor class, adapted for preparing the dataset for training.
-- prepare_dataset_from_photos.py: Script that takes photos from the input_directory path and then preprocesses them using the PreProcessor class from the pre_processor_prepare_dataset script. The processed photos are saved to the save_directory path.
-- prepare_dataset_from_video.py: Script that works similarly to prepare_dataset_from_photos.py but for a folder with video materials.
-folder other_useful_scripts: Other scripts not required for the program to function, but useful during dataset preparation (e.g., class size balancing, parsers, plotting graphs, or archival versions of the preprocessing algorithm).
+
 # 
 
-# Preparing the Dataset
-
-## For Image Dataset:
-In the prepare_dataset_from_photos.py script, select:
-- input_directory - the folder with the training or test dataset previously divided into classes - each class in a separate subfolder.
-- filter_option - the selected filter from the Enum list of the FilterOption class.
-- save_directory - the folder where the images will be saved after preprocessing.
 # 
-## For Video Dataset (supported formats: mp4 and mkv)
-In the prepare_dataset_from_photos.py script, select:
-- input_directory - the folder with the training or test dataset previously divided into classes - each class in a separate subfolder (unless the value in dataset = 0 or dataset = 1).
-- filter_option - the selected filter from the Enum list of the FilterOption class.
-- save_directory - the folder where the images will be saved after preprocessing.
-- dataset - default value 2. For values 0 and 1, the division into classes is made based on the file name (only for damevo dataset with
-# 
-# Training Your Own Model
-# 
-After preparing the dataset, you can proceed to train the model using the model_treining.ipynb script. Before running the script, adjust the following parameters at the beginning of the script:
-- nr_classes - the number of classes in the prepared training and test data.
-- dataset_size - the resolution to which the images from the dataset will be scaled to train the model. Typically (227, 227) for AlexNet and (48,48) for CNN2D. The best results are achieved for datasets with images of the same resolution as the target.
-- nr_of_channel - the number of channels. 3 for RGB datasets (default), 1 for grayscale datasets.
-- batch_size - 64 for most datasets seems optimal, but for small datasets, consider reducing this value.
-- dataset_path - the path to the data set (folder divided into 2 subfolders - train and test, which should contain a subfolder with images for each class).
-- nr_epochs - the number of epochs for which the network will be trained - for AlexNet, the optimal value is 30, for CNN2D, usually in the range of 50 - 100, depending on the dataset.
-# 
-
+ ```   
 # Bibliography:
- - Vadim Pisarevsky. Opencv - haarcascades subdirectory, 2020. URL https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.
-xml.
-- Shubham Rath. face-detection-with-opencv-and-dnn, 2018. URL https://github.com/sr6033/face-detection-with-OpenCV-and-DNN.git.
-- Farneet Singh. Ck+ facial emotion recognition - notebook, 2023. URL https://www.kaggle.com/code/farneetsingh24/ck-facial-emotion-recognition-96-46-accuracy. [Online; accessed 12 May, 2024, APACHE LICENSE, VERSION 2.0].
 
 
 ---
@@ -107,32 +36,89 @@ xml.
 ---
 <div align="center">    
  
-#  Analiza algorytmów przetwarzania obrazu wideo z nagraniami twarzy w celu poprawy jakości wykrywania emocji
-<!--
-[![Paper](http://img.shields.io/badge/paper-arxiv.1001.2234-B31B1B.svg)](https://www.nature.com/articles/nature14539)
-[![Conference](http://img.shields.io/badge/NeurIPS-2019-4b44ce.svg)](https://papers.nips.cc/book/advances-in-neural-information-processing-systems-31-2018)
-[![Conference](http://img.shields.io/badge/ICLR-2019-4b44ce.svg)](https://papers.nips.cc/book/advances-in-neural-information-processing-systems-31-2018)
-[![Conference](http://img.shields.io/badge/AnyConference-year-4b44ce.svg)](https://papers.nips.cc/book/advances-in-neural-information-processing-systems-31-2018)  
-
-ARXIV   
-[![Paper](http://img.shields.io/badge/arxiv-math.co:1480.1111-B31B1B.svg)](https://www.nature.com/articles/nature14539)
-
-![CI testing](https://github.com/PyTorchLightning/deep-learning-project-template/workflows/CI%20testing/badge.svg?branch=master&event=push)
--->
-
-<!--  
-Conference   
--->   
-</div>
+#  System genetycznego wspomagania dokowania ciężarówek znaczepami
  
 # Opis   
-Celem pracy było zbadanie wpływu różnych metod wstępnego przetwarzania obrazu na skuteczność rozpoznawania emocji przez sieci neuronowe na podstawie zdjęć i materiałów wideo. Zbadane metody to normalizacja przestrzenna łączona z takimi metodami jak normalizacja intensywności metodą CLAHE, wykrywanie krawędzi filtrem Sobela i metodą Canny, oraz dodawanie i odejmowanie klatek. W pracy wykorzystano klasyfikatory AlexNet oraz dedykowaną sieć CNN2D. Spośród wszystkich przetestowanych metod najskuteczniejsza okazała się ta, oparta o dodawanie klatek, polegająca na przypidsywaniu 3 kolejnych klatek w małych odstępach czasu do kanałów R, G i B. Metoda ta, do działania wykorzystuje także normalizację przestrzenną, pozycjonującą i skalującą twarz w oparciu o pozycję punktów charakterysytcznych twarzy. Ogólny model rozwiązania prezentuje się następująco: 
-#
+Program ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami za pomocą klasycznego algorytmu genetycznego. Program należy uruchomiać za pomocą skryptu uruchom.m lub GUI.mlapp Na program składa się łącznie 9 plików:
+ ```   
+- uruchom.m – skrypt uruchomieniowy - za jego pomocą lub aplikacji GUI należy włączać algorytm
+- GUI.mlapp – aplikacja GUI umożliwiająca uruchomienie algorytmu
+- Instrukcja.mlapp – okno do otwarcia z aplikacji głównej zawierające skróconą instrukcję użytkownika
+- algorytm_rank.m – główny program wraz z całym algorytmem genetycznym (metoda selekcji rankingowa)
+- algorytm_tur.m – to samo co wyżej (metoda selekcji turniejowa)
+- wyswietl.m – skrypt odpowiedzialny za animację parkowania ciężarówki i wyświetlenie wykresów
+- linexline.m – zewnętrzna funkcja sprawdzająca, czy dwa odcinki się ze sobą przecinają (zaimplementowana w algorytmie do wykrywania kolizji) [Preetham Manjunatha: Line 2 Line intersection point (two line segments), 2022, https://github.com/preethamam/Line2LineIntersectionPoint/releases/tag/1.1.0, GitHub.]
+- podglad.m – skrypt wyświetlający przygotowany scenariusz bez uruchamiania algorytmu
+- scenariusze_bonus.m – przygotowana dodatkowe scenariusze do wklejenia do skryptu uruchom.m
+ ```   
+Uproszczoną strukturę w programu można opisać w następujący sposób:
+![image](https://github.com/user-attachments/assets/05820a48-5f1f-4e2f-bd02-1056cce963d4)
 
-![ModelRoziwazania](https://github.com/user-attachments/assets/05c95074-30d5-4596-9cce-79f8b4bb4965)
-
-
+Uwaga: część skryptów występuje jako funkcje, które do wywołania często wymagają podania
+wielu zmiennych:
+ ```  
+function algorytm_tur(pk, pm, M, MAX_Pokolen, opcja, granica, x0, y0, teta_t0, teta_c0, u0, PSC)
+function algorytm_rank(pk, pm, M, MAX_Pokolen, opcja, granica, x0, y0, teta_t0, teta_c0, u0, PSC)
+function podglad(PSC, granica, x0, y0, teta_t0, teta_c0)
+gdzie:
+pk – prawdopodobieństwo krzyżowania
+pm – prawdopodobieństwo mutacji
+M – liczba genotypów w każdym pokoleniu
+MAX_Pokolen – maksymalna liczba pokoleń
+opcja – wybrany scenariusz
+[x0, y0] – punkt początkowy algorytmu (środek tylnej osi naczepy)
+teta_t0 – początkowy kąt między naczepą, a osią x kartezjańskiego ukł. wsp
+teta_c0 – początkowy kąt między ciągnikiem, a osią x kartezjańskiego ukł. Wsp
+u0 – początkowy kąt kół w radainach (od -1 do 1)
+PSC – trójwymiarowa tablica definiująca punkty kolizji
+dla PSC(i,j,:) i oznacza nr obiektu, a j nr kolejnego punktu
+PSC(i,j,:) łączy się z PSC(i,j-1,:) i PSC(i,j+1,:)
+z czego punkt PSC(i,1,:) łączy się jedynie z PSC(i,2,:)
+np.
+ PSC(1,1,:) = [50 8];
+ PSC(1,2,:) = [35 8];
+ PSC(1,3,:) = [35 7];
+ PSC(1,4,:) = [50 7];
+ PSC(2,1,:) = [50 12];
+ PSC(2,2,:) = [35 12];
+ PSC(2,3,:) = [35 13];
+ PSC(2,4,:) = [50 13];
+function wyswietl(rt, u0, kara, pk , pm , M , MAX_Pokolen, przegrana, u_zm, r_zm, NajWybor,
+srednia, Rmax, Rconst, Rmin, PCEL, PCEL2, N, k, PSC, granica, x0, y0, teta_t0, teta_c0, we, dsic,
+dsin, dosc, dosn, dnos, dcos, dcel, ktora_proba, czas)
+gdzie:
+rt – wybrany algorytm (rt = 0 – algorytm_tur, rt = 1 – algorytm rank)
+u0, pk, pm, M, MAX_Pokolen, PSC, x0, y0, teta_t0, teta_c0 – jak w algorytm_tur i algorytm_rank
+kara – kara najlepszego wylosowanego osobnika (wynikająca z kolizji)
+przegrana – true jeśli nie znaleziono rozwiązania, false jeśli znaleziono
+u_zm – stały kąt w radianach o jaką zmienia się kąt skrętu kół u(t) w każdym kroku
+r_zm – stała zmiana prędkości r(t) z każdym kolejnym krokiem (można interpretować również jako
+długość każdego kroku)
+NajWybor – funkcja przystosowania najlepszego osobnika wylosowanego w algorytmie
+srednia – średnia funkcji przystosowania osobników z ostatniego pokolenia
+<Rmax, Rmin> – przedział w którym algorytm zmienia r(t)
+Rconst – wartość początkowa r(t)
+PCEL – punkt celu do którego dąży tylna oś naczepy
+PCEL2 – punkt celu do którego dąży przegub między naczepą, a ciężarówką
+N – długość chromosomów
+k – nr pokolenia dla którego algorytm zakończył działanie
+granica – wielkość planszy
+we – chromosom, którego rozwiązanie chcemy wyświetlić
+dsic – odległość od końca ciągnika do siodła
+dsin - odległość od początku naczepy do siodła
+dosc - % odległość od przedniej osi do przodu ciągnika
+dosn - % odległość od tylnej osi do tyłu naczepy
+dnos -% odległość od tylnej osi naczepy do siodła
+dcos - % odległość od przedniej osi ciągnika do siodła
+ktora_proba – nr próby podczas której znaleziono rozwiązanie
+czas – czas znalezienia rozwiązania przez algorytm 
+ ```  
 # Wyniki
+
+Najgorsze rezultaty otrzymano dla przyjętej początkowo metody koła ruletki. Próby poprawy tej
+metody poprzez skalowanie funkcji przystosowania nie przyniosły zamierzonego rezultatu. Lepsze
+wyniki otrzymano dla selekcji metodą turniejową oraz rankingową. Poprawę zanotowano również
+po zastosowaniu krzyżowania wielopunktowego, oraz strategii elitarnej.
 W przypadku wykorzystania metody opartej o dodawnie klatek i klasyfikatora AlexNet osiągnięta dokładność dla bazy RAVDESS wyniosła 70,09%. Pozostałe wyniki przedstawiono w poniższych tabelach.
 
 Wyniki dla baz danych ze zdjęciami (klasyfikator CNN2D):
