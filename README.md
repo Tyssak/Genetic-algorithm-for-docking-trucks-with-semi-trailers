@@ -116,90 +116,49 @@ czas – czas znalezienia rozwiązania przez algorytm
  ``` 
 # Wyniki
 
-Najgorsze rezultaty otrzymano dla przyjętej początkowo metody koła ruletki. Próby poprawy tej
-metody poprzez skalowanie funkcji przystosowania nie przyniosły zamierzonego rezultatu. Lepsze
-wyniki otrzymano dla selekcji metodą turniejową oraz rankingową. Poprawę zanotowano również
-po zastosowaniu krzyżowania wielopunktowego, oraz strategii elitarnej.
-W przypadku wykorzystania metody opartej o dodawnie klatek i klasyfikatora AlexNet osiągnięta dokładność dla bazy RAVDESS wyniosła 70,09%. Pozostałe wyniki przedstawiono w poniższych tabelach.
-
-Wyniki dla baz danych ze zdjęciami (klasyfikator CNN2D):
-
-| **Baza danych** | **Dokładność bazowa** | **Normalizacja bez maski** | **Normalizacja z maską** | **Normalizacja + SOBEL** | **Normalizacja + CANNY** | **Normalizacja + CLAHE** |
-|-----------------|-----------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **CK+**         | 0,8283                | 0,8788                     | 0,8485                   | **0,9040**                | 0,8030                   | 0,8788                   |
-| **FER2013**     | 0,6967                | **0,6987**                 | 0,6928                   | 0,6562                   | 0,6240                   | 0,6920                   |
-| **RAFDB**       | 0,8338                | 0,8342                     | **0,8344**               | 0,7120                   | 0,6932                   | 0,8322                   |
-
-Wyniki dla materiałów wideo (baza RAVDESS - 7 emocji: spokój, radość, smutek, złość, strach, zniesmaczenie, zaskoczenie):
-
-| **Klasyfikator** | **Dokładność bazowa** | **Normalizacja bez maski** | **Normalizacja z maską** | **Normalizacja + SOBEL** | **Normalizacja + CANNY** | **Normalizacja + CLAHE** |
-|------------------|-----------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **CNN2D**        | 0,6006                | 0,6147                     | 0,6086                   | 0,6256                   | 0,6343                   | **0,6352**               |
-| **AlexNet**      | 0,6845                | 0,6842                     | 0,6537                   | 0,5138                   | 0,4502                   | **0,6928**               |
-
-| **Klasyfikator** | **Dokładność bazowa** | **Odejmowanie klatek z maską** | **Odejmowanie klatek (brak maski)** | **Dodawanie klatek z maską** | **Dodawanie klatek (brak maski)** |
-|------------------|-----------------------|--------------------------------|------------------------------------|------------------------------|----------------------------------|
-| **CNN2D**        | 0,6006                | 0,4567                         | 0,4922                             | **0,6492**                    | 0,6274                           |
-| **AlexNet**      | 0,6552                | 0,5931                         | 0,6200                             | **0,7009**                    | 0,6804                           |
-
-
 
 # Jak uruchomić
-Najpierw zainstaluj wymagane zależności: 
-```bash
-# Sklonuj repozytorium  
-git clone https://github.com/Tyssak/pracamagisterska.git
+Program uruchamiać za pomocą pliku `uruchomGUI.mlapp` bądź uruchom.m
 
-# Zainstaluj projekt   
-cd pracamagisterska
-pip install -e .   
-pip install -r requirements.txt
+**uruchomGUI**
+Wygląd GUI prezentuje się następująco:
 
-# Pobierz plik model_eq.h5 i umieść go w katalogu projektu lub samemu wytrenuj model (patrz rozdział trening własnego modelu)
-# Uruchom moduł (domyślnie używa pliku model_eq.h5 jako modelu)
-python main.py
+![image](https://github.com/user-attachments/assets/bd5ec12c-5171-4e89-805b-fd50c188d3e5)
+Do wyboru mamy kilka opcji.
+Opcje na górze panelu pozwalają ustawić podstawowe parametry algorytmu, chociaż nie zaleca się ich zbyt dużej zmiany, gdyż może to wpłynąć negatywnie na szybkość działania algorytmu, bądź też jego skuteczność.
+Opcje po lewej stronie pozwalają na wybranie spośród dwóch metod stosujących różne metody selekcji oraz na wybranie jednego z 12 przygotowanych scenariuszy przedstawionych na poniższym rysunku:
+![image](https://github.com/user-attachments/assets/9ab092fc-8845-463b-9493-3deb3718c557)
 
- ```   
-# Lista wszystkich skryptów:
-- clasyficate.py: Zawiera klasę Clasyficator, która klasyfikuje emocje na podstawie dostarczonej klatki. Wywoływana przez klasę PreProcessor ze skryptu pre_processor_classify.
-- filters.py: Zawiera klasę FiltersOption implementującą różne filtry zastosowane w algorytmie.
-- main.py: Skrypt odpowiedzialny za GUI oraz wywołujący klasę PreProcessor ze skryptu pre_processor_classify.
-- model_training.ipynb: Skrypt do trenowania modelu. Domyślnie wykorzystuje dataset znajdujący się w folderze /kaggle/input/laczone/wszystkie, który został uprzednio podzielony na dwa podfoldery: jeden w folderze train oraz drugi w folderze test. Domyślna liczba klas w datasecie wynosi 7, a rozmiar obrazów to (227, 227) z trzema kanałami. Domyślnym klasyfikatorem jest AlexNet. Po odkomentowaniu oznaczonej części kodu, można użyć klasyfikatora CNN2D.
-- pre_processor_classify.py: Zawiera klasę PreProcessor, implementującą główną logikę przetwarzania wstępnego oraz kilka innych przydatnych funkcji podczas przetwarzania wstępnego.
-- pre_processor_prepare_dataset.py: Nieznacznie zmodyfikowana wersja klasy PreProcessor, przystosowana do przygotowania datasetu do treningu.
-- prepare_dataset_from_photos.py: Skrypt pobierający zdjęcia ze ścieżki input_directory, a następnie wykonujący na nich preprocessing za pomocą klasy PreProcessor ze skryptu pre_processor_prepare_dataset. Przetworzone zdjęcia są zapisywane do ścieżki save_directory.
-- prepare_dataset_from_video.py: Skrypt działający analogicznie jak prepare_dataset_from_photos.py, ale dla folderu z materiałami wideo.
-- folder other_useful_scripts: Inne skrypty niewymagane do działania programu, ale przydatne podczas przygotowywania datasetów (np. wyrównanie wielkości klas, parsery, wykreślanie wykresów, czy archiwalne wersje algorytmu wykonującego preprocessing).
-# 
+Scenariusze te cechują się różnym stopniem trudności. Możliwe jest również zdefiniowanie własnego scenariusza. Do tego celu służy dolny panel.
 
-# Przygotowanie datasetu
+**Dodaj własny scenariusz:**
+Krawędź – definiuje wielkość planszy (zalecane wartości od 30 do 80)
+Warunki początkowe:
+Punkt startowy - pozwalają na zmianę położenia początkowego ciężarówki oraz naczepy
+Orientacja:
+teta_c - kąt między ciężarówką, a osią x kartezjańskiego układu współrzędnych.
+teta_t - kąt pomiędzy naczepą, a osią x kartezjańskiego układu współrzędnych.
+Dodaj punkt kolizji:
+Punkty wprowadzone w oknie "dodaj punkt kolizji" oznaczją kolejne wierzchołki obiektu. Punkty łączą się jedynie z punktami sąsiednimi z tego samego obiektu tj. Punkt j Obiektu 1 łączyć się będzie jedynie z Punktami j-1 oraz j+1 Obiektu 1. Oznacza to, że chcąc stwrozyć zamkniętą pętlę, czyli np. trójkąt lub czworościan, jeden z punktów należy zdefiniować dwukrotnie - jako pierwszy i jako ostatni. 
+Maksymlanie można zdefiniować 5 obiektów. Każdy z obiektów może składać się z maksymalnie 5 punktów. 
+Sposób w jaki łączone są poszczególne punkty przedstawia poniższy rysunek:
+![image](https://github.com/user-attachments/assets/895bfad1-61aa-4078-af6a-089299f05383)
 
-## Dla datasetu ze zdjęciami:
-W skrypcie prepare_dataset_from_photos.py zmienić:
-- input_directory - folder z datasetem treningowym bądź testowym uprzednio podzielonym na klasy - każda z klas w osobnym podfolerze.
-- filter_option - wybrany filer z listy 'Enum' klasy 'FilterOption'
-- save_directory - folder, do którego zostaną zapisane zdjęcia po wykonaniu preprocessingu
-# 
-## Dla datasetu z materiałami wideo  (obsługiwane formaty: mp4 i mkv)
-W skrypcie prepare_dataset_from_photos.py wybrać:
-- input_directory - folder z datasetem treningowym bądź testowym uprzednio podzielonym na klasy - każda z klas w osobnym podfolerze (chyba, że wartość w dataset = 0 lub dataset = 1)
-- filter_option - wybrany filer z listy 'Enum' klasy 'FilterOption'
-- save_directory - folder do którego zostaną zapisane zdjęcia po wykonaniu preprocessingu
-- dataset - domyślna wartość 2. Dla wartości 0 i 1 wykonywany jest podział na klasy na podstawie nazwy pliku (tylko dla datasetu damevo: datset = 0 i RAVDESS: dataset = 1).
-# 
-# Trening własnego modelu
-# 
-Po przygotowaniu datasetu można przystąpić do treningu modelu wykorzystując skrypt model_treining.ipynb. Przed uruchomieniem skryptu należy dostosować następujące parametry na poczatku skryptu: 
-- nr_classes - liczba klas w przygotowanych danych treningowych i testowych
-- dataset_size - rozdzielczość zdjęć do których obrazy z datasetu zostaną przeskalowane w celu wytrenowania modelu. Modelowo (227, 227) dla AlexNet i (48,48) dla CNN2D. Najlepsze rezultaty osiąga się dla datasetów o zdjęciach w tej samej rozdzielczości, co docelowa
-- nr_of_channel - liczba kanałów. 3 dla zbiorów danych w RGB (domyslnie), 1 dla zbiorów danych w skali szarości
-- batch_size - 64 dla większości zbiorów danych wydaje się optymalne, jednak dla małych datsetów należy rozważyć zmniejszenie tej wartości
-- dataset_path - ścieżka do zbioru z danymi (folder podzielony na 2 podfoldery - train oraz test, te z kolei powinny zawierać podfolder ze zdjęciami dla każdej z klas)
-- nr_epochs - liczba epok dla których sieć będzie trenowana - dla AlexNet optymalna wartość to 30, dla CNN2D zazwyczaj w przedziale 50 - 100 w zależności od zbioru danych
-# 
+Chcąc sprawdzić wygląd zdefiniowanego scenariusza bez uruchamiania algorytmu należy wybrać przycisk Podgląd.
+Chcąc uruchomić algorytm należy kliknąć w przycisk Uruchom i postępować zgodnie z instrukcjami wyświetlającymi się w oknie komend (Command Window).
+Przykład takich instrukcji pokazano poniżej.
+![image](https://github.com/user-attachments/assets/5f92aa44-9239-4e2a-968d-7749818a92a5)
 
-# Bibliografis:
- - Vadim Pisarevsky. Opencv - haarcascades subdirectory, 2020. URL https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.
-xml.
-- Shubham Rath. face-detection-with-opencv-and-dnn, 2018. URL https://github.com/sr6033/face-detection-with-OpenCV-and-DNN.git.
-- Farneet Singh. Ck+ facial emotion recognition - notebook, 2023. URL https://www.kaggle.com/code/farneetsingh24/ck-facial-emotion-recognition-96-46-accuracy. [Online; accessed 12 May, 2024, APACHE LICENSE, VERSION 2.0].
+Jeśli algorytm znalazł rozwiązanie rozpocznie się animacja parkowania ciężarówki. Po zakończeniu animacji parkowania należy wcisnąć spację w celu przejścia dalej i wyświetlenia wykresów. Zamykanie okna z wykresami również odbywa się za pomocą spacji.
+W sytuacji w której rozwiązanie nie zostało znalezione program pyta użytkownika, czy chce, aby dane rozwiązanie zostało wyświetlone, a następnie, w określonych sytuacjach czy użytkownik chce aby program spróbował kontynuować rozwiązanie. Jeśli użytkownik wciśnie tak, algorytm odpali się ponownie przyjmując jako pozycję początkową, pozycję końcową z poprzedniego algorytmu. W przypadku braku zgody użytkownika program umożliwia ponowne uruchomienie algorytmu od nowa, bądź też porzucenie danego przykładu.
+
+**uruchom**
+Jako alternatywę do graficznego interfejsu użytkownika przygotowano prosty skrypt `uruchom.m`, za pomocą którego wykonać można te same operacje. Skrypt ten jest bogatszy o możliwość zmiany początkowego kąta skrętu kół. Należy jednak bardziej uważać na wprowadzane parametry, gdyż w odróżnieniu od graficznego interfejsu, tutaj nie są one w żaden sposób ograniczone.
+![image](https://github.com/user-attachments/assets/f5a8082d-35b9-4dd9-beda-d41882464655)
+
+Odkomentowując odpowiedni ze skryptów możemy wybrać odpowiedni program do uruchomienia:
+![image](https://github.com/user-attachments/assets/f147d622-6369-4814-8faa-058653e01632)
+
+
+# Bibliografia:
+
