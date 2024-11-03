@@ -4,7 +4,7 @@
 
 # System Genetycznego Wspomagania Dokowania Ciężarówek z Naczepami
 
-<div align="center">    
+<div align="left">    
 
 ## Opis
 Projekt ten ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami, wykorzystując klasyczny algorytm genetyczny. Program można uruchomić za pomocą skryptu `uruchom.m` lub interfejsu graficznego `GUI.mlapp`. 
