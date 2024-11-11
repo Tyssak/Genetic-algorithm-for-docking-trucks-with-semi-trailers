@@ -69,10 +69,11 @@ function podglad(PSC, granica, x0, y0, teta_t0, teta_c0)
 ## Przykłady działania
 
 **Działanie programu wraz z prezentacją GUI i sposobu doboru parametrów**
+
 https://github.com/user-attachments/assets/1b327596-8999-4a50-8eab-26314543556d
 
-
 **Przykłady rozwiązań dla wszystkich z przygotowanych scenariuszy ( pk = 0.95, pm=0.01, liczba osobników w pokoleniu = 800), oraz 2 scenariuszy własnych**
+
 https://github.com/user-attachments/assets/c20dc4b8-bd26-4b0c-b3c8-61c4ee327604
 
 ![image](https://github.com/user-attachments/assets/443d33d6-1b57-42c0-906f-e704dec540dd)
