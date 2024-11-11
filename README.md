@@ -9,7 +9,7 @@
 <div align="left">    
 
 ## Opis
-Projekt ten ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami, wykorzystując klasyczny algorytm genetyczny. Problem ten polegał na znalezieniu jakiejkolwiek drogi przejazdu do miejsca docelowego unikając przy tym kolizji. W celu jego rozwiązania przyjęto strategię zgodnie z którą algorytm sterował kątem skrętu kół ciągnika oraz jego prędkością. Program można uruchomić za pomocą skryptu `uruchom.m` lub interfejsu graficznego `GUI.mlapp`. 
+Projekt ten ma na celu rozwiązanie problemu dokowania ciężarówek z naczepami, wykorzystując klasyczny algorytm genetyczny. Problem ten polegał na znalezieniu jakiejkolwiek drogi przejazdu do miejsca docelowego unikając przy tym kolizji. W celu jego rozwiązania przyjęto strategię zgodnie z którą algorytm sterował kątem skrętu kół ciągnika oraz jego prędkością. Program można uruchomić za pomocą skryptu `uruchom.m` lub interfejsu graficznego `GUI.mlapp`. Projekt pozwala na wybór między 2 metodami selekcji: turniejową oraz rankingową. Dodatkowo umożliwia również zastosowanie krzyżowania wielopunktowego, oraz strategii elitarnej. Przygotowano 10 gotowych scenariuszy o różnym stopniu trudności, które posłużyły do przetestowania skuteczności algorytmu. Dla użytkownika dostępny jest graficzny interfejs umożliwiający dostosowanie najważniejszych parametrów algorytmu, wybór przygotowanego scenariusza, bądź też dodanie własnego. Uzyskane przez algorytm rozwiązania przedstawiane są za pomocą prostej animacji oraz wykresów. 
 
 ---
 
@@ -57,8 +57,32 @@ function podglad(PSC, granica, x0, y0, teta_t0, teta_c0)
 ---
 
 ## Wyniki
+**Porównanie wyników dla algorytmów stosujących selekcję turniejową i różne rodzaje krzyżowań (maksymalna liczba pokoleń – 80, wielkość populacji – 800, wielkość turniejów - 20)**
+![image](https://github.com/user-attachments/assets/c957bd69-547b-4e18-af47-5b4ac8b006ea)
 
-Po uruchomieniu algorytmu uzyskujemy animację oraz wykresy związane z parkowaniem ciężarówki.
+**Porównanie wyników dla algorytmów z zaimplementowaną strategią elitarną i przy braku tej strategii (zastosowane krzyżowanie pięciopunktowe, maksymalna liczba pokoleń – 80, wielkość populacji – 800, wielkość turniejów - 20)**
+![image](https://github.com/user-attachments/assets/7aff5f01-0eee-4998-9f29-c890facf8ceb)
+
+**Skuteczność algorytmu wykorzystującego metodę turniejową dla 12 scenariuszy testowych**
+![image](https://github.com/user-attachments/assets/6f02fcf5-6e62-45b8-a1a6-7b23a001b274)
+
+
+**Przykłady rozwiązań dla wszystkich z przygotowanych scenariuszy ( pk = 0.95, pm=0.01, liczba osobników w pokoleniu = 800), oraz 2 scenariuszy własnych**
+![image](https://github.com/user-attachments/assets/443d33d6-1b57-42c0-906f-e704dec540dd)
+![image](https://github.com/user-attachments/assets/a684be37-59be-4133-b668-428e4e6007f8)
+![image](https://github.com/user-attachments/assets/fb2e3a4b-dc98-49df-9753-467e9e7e839d)
+![image](https://github.com/user-attachments/assets/a7885671-5157-4e05-8d81-1147dc0e6128)
+
+
+https://github.com/user-attachments/assets/c20dc4b8-bd26-4b0c-b3c8-61c4ee327604
+
+
+
+https://github.com/user-attachments/assets/1b327596-8999-4a50-8eab-26314543556d
+
+
+
+
 
 ---
 
@@ -81,11 +105,16 @@ Poniżej przedstawiono wygląd interfejsu graficznego programu:
 - **Warunki początkowe** – konfiguracja pozycji i orientacji ciężarówki oraz naczepy.
 - **Dodaj punkt kolizji** – wprowadzenie punktów kolizji, które definiują wierzchołki obiektów.
 
+
+https://github.com/user-attachments/assets/412a851d-0e95-48a1-ad87-18640905a113
+
+
 **Przykładowy scenariusz:**
 
 ![image](https://github.com/user-attachments/assets/9ab092fc-8845-463b-9493-3deb3718c557)
 
 W celu przetestowania scenariusza bez uruchamiania algorytmu, wybierz opcję **Podgląd**. Uruchomienie algorytmu rozpocznie animację, a po jej zakończeniu wyświetlą się wykresy.
+
 
 ### **Skrypt uruchom**
 
@@ -93,9 +122,5 @@ Alternatywnie, program można uruchomić za pomocą skryptu `uruchom.m`, który 
 
 ---
 
-## Bibliografia
-- [Preetham Manjunatha: Line 2 Line intersection point (two line segments), GitHub, 2022](https://github.com/preethamam/Line2LineIntersectionPoint/releases/tag/1.1.0)
-
----
 
 
